@@ -16,14 +16,10 @@ import java.util.List;
 public class ApplierReadDTO {
     private Long ano;
 
+    private String bizNo;
     private String name;
+    private String openDate;
     private String email;
-
-    private String zipcode;
-    private String roadAddr;
-    private String lotNumAddr;
-    private String detailAddr;
-    private String addrEtc;
 
     private ApplierStatus regStatus;
 

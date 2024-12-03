@@ -19,14 +19,11 @@ public class ApplierEntity extends BasicEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ano;
 
+    private String bizNo;
     private String name;
+    private String openDate;
     private String email;
 
-    private String zipcode;
-    private String roadAddr;
-    private String lotNumAddr;
-    private String detailAddr;
-    private String addrEtc;
 
     @ElementCollection
     @Builder.Default

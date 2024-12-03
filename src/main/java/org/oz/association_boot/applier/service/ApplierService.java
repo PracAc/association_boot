@@ -5,6 +5,7 @@ import lombok.extern.log4j.Log4j2;
 import org.oz.association_boot.applier.domain.ApplierEntity;
 import org.oz.association_boot.applier.dto.ApplierListDTO;
 import org.oz.association_boot.applier.dto.ApplierReadDTO;
+import org.oz.association_boot.applier.dto.ApplierRegistryDTO;
 import org.oz.association_boot.applier.repository.ApplierEntityRepository;
 import org.oz.association_boot.common.domain.AttachFile;
 import org.oz.association_boot.common.dto.PageRequestDTO;
@@ -44,14 +45,29 @@ public class ApplierService {
                 .ano(result.getAno())
                 .email(result.getEmail())
                 .name(result.getName())
-                .zipcode(result.getZipcode())
-                .roadAddr(result.getRoadAddr())
-                .lotNumAddr(result.getLotNumAddr())
-                .detailAddr(result.getDetailAddr())
-                .addrEtc(result.getAddrEtc())
+                .bizNo(result.getBizNo())
+                .openDate(result.getOpenDate())
                 .regStatus(result.getRegStatus())
                 .regDate(result.getRegDate())
                 .attachFileNames(fileNames)
                 .build());
+    }
+
+    public Optional<Long> registryApplier(ApplierRegistryDTO registryDTO){
+        ApplierEntity applierEntity = ApplierEntity.builder()
+                .bizNo(registryDTO.getBizNo())
+                .name(registryDTO.getName())
+                .openDate(registryDTO.getOpenDate())
+                .email(registryDTO.getEmail())
+                .build();
+
+        registryDTO.getUploadFileNames().forEach(fileName -> {
+            applierEntity.addFile(fileName);
+            log.info(fileName);
+        });
+
+        applierEntityRepository.save(applierEntity);
+
+        return Optional.of(applierEntity.getAno());
     }
 }

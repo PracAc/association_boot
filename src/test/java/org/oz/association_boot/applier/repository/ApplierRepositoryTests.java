@@ -29,12 +29,9 @@ public class ApplierRepositoryTests {
         for (int i = 0; i < 150; i++) {
             ApplierEntity applierEntity = ApplierEntity.builder()
                     .name("Creator" + i)
+                    .bizNo("123456789" + i)
+                    .openDate("2024-12-12")
                     .email("skwize@naver.com")
-                    .zipcode("12345")
-                    .roadAddr("Road Address" + i)
-                    .lotNumAddr("Lot" + i)
-                    .detailAddr("Detail Address" + i)
-                    .addrEtc("Address ETC" + i)
                     .regStatus(ApplierStatus.PENDING)
                     .build();
             applierEntity.addFile(UUID.randomUUID()+"test.jpg");
@@ -71,11 +68,8 @@ public class ApplierRepositoryTests {
                 .ano(result.getAno())
                 .email(result.getEmail())
                 .name(result.getName())
-                .zipcode(result.getZipcode())
-                .roadAddr(result.getRoadAddr())
-                .lotNumAddr(result.getLotNumAddr())
-                .detailAddr(result.getDetailAddr())
-                .addrEtc(result.getAddrEtc())
+                .bizNo(result.getBizNo())
+                .openDate(result.getOpenDate())
                 .regStatus(result.getRegStatus())
                 .regDate(result.getRegDate())
                 .attachFileNames(fileNames)
