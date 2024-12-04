@@ -2,9 +2,7 @@ package org.oz.association_boot.applier.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.oz.association_boot.applier.dto.ApplierListDTO;
-import org.oz.association_boot.applier.dto.ApplierReadDTO;
-import org.oz.association_boot.applier.dto.ApplierRegistryDTO;
+import org.oz.association_boot.applier.dto.*;
 import org.oz.association_boot.applier.service.ApplierService;
 import org.oz.association_boot.common.dto.PageRequestDTO;
 import org.oz.association_boot.common.dto.PageResponseDTO;
@@ -47,5 +45,19 @@ public class ApplierController {
         registryDTO.setUploadFileNames(fileNames);
 
         return ResponseEntity.ok().body(applierService.registryApplier(registryDTO).get());
+    }
+
+    @PutMapping("modify")
+    public ResponseEntity<Long> modifyApplierStatus(@RequestBody ApplierModifyDTO modifyDTO){
+
+        log.info(modifyDTO);
+
+        return ResponseEntity.ok().body(applierService.modifyStatus(modifyDTO).get());
+    }
+
+    @PostMapping("/auth")
+    public ResponseEntity<String> checkApplierAuth(@RequestBody ApplierAuthCheckDTO checkDTO){
+        log.info("=========Auth Check========");
+        return ResponseEntity.ok().body(applierService.checkAuth(checkDTO).get());
     }
 }

@@ -14,6 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@ToString(exclude = {"applier_files"})
 public class ApplierEntity extends BasicEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +24,6 @@ public class ApplierEntity extends BasicEntity {
     private String name;
     private String openDate;
     private String email;
-
 
     @ElementCollection
     @Builder.Default
@@ -36,6 +36,11 @@ public class ApplierEntity extends BasicEntity {
     @Column(name = "reg_status")
     private ApplierStatus regStatus = ApplierStatus.PENDING;
 
+    private String authCode;
+
+    @Builder.Default
+    private Boolean authCheck = Boolean.FALSE;
+
     public void addFile(String fileName) {
         if (fileName == null){
             attachFiles = new HashSet<>();
@@ -46,7 +51,17 @@ public class ApplierEntity extends BasicEntity {
         attachFiles.clear();
     }
 
-    public void changeStatus(ApplierStatus status) {
-        this.regStatus = status;
+    public void changeAccepted() {
+        this.regStatus = ApplierStatus.ACCEPTED;
+    }
+    public void changeRejected() {
+        this.regStatus = ApplierStatus.REJECTED;
+    }
+
+    public void changeAuthCode(String authCode) {
+        this.authCode = authCode;
+    }
+    public void changeAuthCheck(Boolean authCheck) {
+        this.authCheck = authCheck;
     }
 }

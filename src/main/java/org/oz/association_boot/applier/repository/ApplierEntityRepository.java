@@ -13,8 +13,18 @@ public interface ApplierEntityRepository extends JpaRepository<ApplierEntity,Lon
     @Query("""
     SELECT a FROM ApplierEntity a
     LEFT JOIN FETCH a.attachFiles af
-        WHERE a.ano = :ano
+        WHERE a.ano = :ano AND a.delFlag = false
         ORDER BY af.ord DESC
+    """)
+    Optional<ApplierEntity> getApplierWithFiles(@Param("ano") Long ano);
+
+    @Query("""
+    SELECT 
+        a
+    FROM
+        ApplierEntity a
+    WHERE
+        a.ano = :ano AND a.delFlag = false
     """)
     Optional<ApplierEntity> getApplier(@Param("ano") Long ano);
 }

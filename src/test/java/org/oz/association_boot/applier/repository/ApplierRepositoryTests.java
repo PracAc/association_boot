@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.oz.association_boot.applier.domain.ApplierEntity;
 import org.oz.association_boot.applier.domain.ApplierStatus;
 import org.oz.association_boot.applier.dto.ApplierListDTO;
+import org.oz.association_boot.applier.dto.ApplierModifyDTO;
 import org.oz.association_boot.applier.dto.ApplierReadDTO;
 import org.oz.association_boot.common.domain.AttachFile;
 import org.oz.association_boot.common.dto.PageRequestDTO;
@@ -41,6 +42,7 @@ public class ApplierRepositoryTests {
         }//end for
 
     }
+
     @Test
     public void testList() {
 
@@ -76,5 +78,24 @@ public class ApplierRepositoryTests {
                 .build();
         log.info(result.toString());
         log.info(dto);
+    }
+
+    @Test
+    public void modifyTest() {
+        ApplierModifyDTO modifyDTO = new ApplierModifyDTO();
+        modifyDTO.setAno(161L);
+        modifyDTO.setStatus(2);
+
+        ApplierEntity entity = applierEntityRepository.getApplier(modifyDTO.getAno()).get();
+
+        if (modifyDTO.getStatus() == 1){
+            entity.changeAccepted();
+        }
+        if (modifyDTO.getStatus() == 2){
+            entity.changeRejected();
+        }
+
+        log.info(entity.toString());
+
     }
 }

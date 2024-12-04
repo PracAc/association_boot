@@ -24,10 +24,6 @@ public class S3Uploader {
     @Value("${cloud.aws.s3.upload-folder:}")
     private String folderName;
 
-    /**
-     * S3 경로를 동적으로 생성하는 메소드
-     * depths 리스트의 길이에 관계없이 모든 깊이를 포함한 경로를 생성
-     */
     public String getFolderPath(String s3UploadFolder) {
         if (s3UploadFolder != null && !s3UploadFolder.isEmpty()) {
             return bucket + "/" + folderName + "/" + s3UploadFolder;
