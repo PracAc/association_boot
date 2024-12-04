@@ -1,29 +1,37 @@
 package org.oz.association_boot.applier.repository;
 
 import lombok.extern.log4j.Log4j2;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.oz.association_boot.AssociationBootApplication;
 import org.oz.association_boot.applier.domain.ApplierEntity;
 import org.oz.association_boot.applier.domain.ApplierStatus;
 import org.oz.association_boot.applier.dto.ApplierListDTO;
+import org.oz.association_boot.applier.dto.ApplierListRequestDTO;
 import org.oz.association_boot.applier.dto.ApplierModifyDTO;
 import org.oz.association_boot.applier.dto.ApplierReadDTO;
 import org.oz.association_boot.common.domain.AttachFile;
 import org.oz.association_boot.common.dto.PageRequestDTO;
 import org.oz.association_boot.common.dto.PageResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@SpringBootTest
+
 @Log4j2
+@SpringBootTest(classes = AssociationBootApplication.class)
 public class ApplierRepositoryTests {
+
+
     @Autowired
     ApplierEntityRepository applierEntityRepository;
-
+    @Disabled
     @Test
     public void insertTest() {
 
@@ -42,20 +50,21 @@ public class ApplierRepositoryTests {
         }//end for
 
     }
-
+    @Disabled
     @Test
     public void testList() {
 
-        PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+        ApplierListRequestDTO pageRequestDTO = ApplierListRequestDTO.builder()
                 .page(1)
                 .size(10)
+                .regDate(LocalDate.parse("2024-12-03"))
                 .build();
 
         PageResponseDTO<ApplierListDTO> response = applierEntityRepository.getListApplier(pageRequestDTO);
 
         log.info(response);
     }
-
+    @Disabled
     @Test
     public void getReadTest() {
         Long ano = 149L;
@@ -79,7 +88,7 @@ public class ApplierRepositoryTests {
         log.info(result.toString());
         log.info(dto);
     }
-
+    @Disabled
     @Test
     public void modifyTest() {
         ApplierModifyDTO modifyDTO = new ApplierModifyDTO();

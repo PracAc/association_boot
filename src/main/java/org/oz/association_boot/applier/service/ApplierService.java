@@ -28,7 +28,7 @@ public class ApplierService {
     private final MailSendService mailSendService;
     private final CaptchaUtil captchaUtil;
 
-    public PageResponseDTO<ApplierListDTO> getApplierList (PageRequestDTO pageRequestDTO){
+    public PageResponseDTO<ApplierListDTO> getApplierList (ApplierListRequestDTO pageRequestDTO){
 
         log.info("===========================getApplierList========================");
 

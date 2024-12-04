@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 public class ApplierListDTO {
     private Long ano;
     private String name;
+    private String bizNo;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime regDate;

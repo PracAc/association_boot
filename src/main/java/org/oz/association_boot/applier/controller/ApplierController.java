@@ -22,7 +22,7 @@ public class ApplierController {
     private final CustomFileUtil fileUtil;
 
     @GetMapping("list")
-    public ResponseEntity<PageResponseDTO<ApplierListDTO>> getList(PageRequestDTO pageRequestDTO) {
+    public ResponseEntity<PageResponseDTO<ApplierListDTO>> getList(ApplierListRequestDTO pageRequestDTO) {
 
         return ResponseEntity.ok().body(applierService.getApplierList(pageRequestDTO));
     }
@@ -33,7 +33,7 @@ public class ApplierController {
         return ResponseEntity.ok().body(applierService.getApplierOne(ano).get());
     }
 
-    @PostMapping("")
+    @PostMapping("/registry")
     public ResponseEntity<Long> registryApplier(ApplierRegistryDTO registryDTO){
         log.info("======================registryApplier=========================");
 
