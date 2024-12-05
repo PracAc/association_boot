@@ -61,7 +61,13 @@ org:
     alwaysNew: true
     upload:
       path: upload
+    kafkahost: 10.10.10.228
+    kafkaport: 9092
+
 
 logging:
   level:
     org.springframework.security.web: debug
+
+server:
+  port: 8080

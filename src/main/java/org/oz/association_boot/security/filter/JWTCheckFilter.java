@@ -35,6 +35,11 @@ public class JWTCheckFilter extends OncePerRequestFilter {
         log.info("----Should NOT Filter----");
 
         String uri = request.getRequestURI();
+        // Kafka테스트 uri
+        if(uri.equals("/hello")){
+            log.info("----카프카 지나가용----");
+            return true;
+        }
         if(uri.equals("/api/association/applier/registry")){
             return true;
         }
