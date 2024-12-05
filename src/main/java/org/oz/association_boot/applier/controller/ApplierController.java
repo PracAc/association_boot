@@ -44,6 +44,7 @@ public class ApplierController {
         log.info(fileNames);
         registryDTO.setUploadFileNames(fileNames);
 
+
         return ResponseEntity.ok().body(applierService.registryApplier(registryDTO).get());
     }
 
