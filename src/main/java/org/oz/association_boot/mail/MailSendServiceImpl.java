@@ -39,7 +39,7 @@ public class MailSendServiceImpl implements MailSendService {
             Context context = new Context();
             context.setVariable("subject", mailHtmlSendDTO.getSubject());
             context.setVariable("content", mailHtmlSendDTO.getContent());
-            context.setVariable("name", mailHtmlSendDTO.getName());
+            context.setVariable("cname", mailHtmlSendDTO.getName());
             context.setVariable("htmlMsg", mailHtmlSendDTO.getHtmlMsg());
 
             // 1. 로고 이미지 또는 기타 이미지 파일을 Base64로 인코딩하여 이메일에 첨부

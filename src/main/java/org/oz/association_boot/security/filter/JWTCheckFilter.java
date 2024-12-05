@@ -1,6 +1,7 @@
 package org.oz.association_boot.security.filter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+
+import com.google.gson.Gson;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -96,38 +97,38 @@ public class JWTCheckFilter extends OncePerRequestFilter {
         }
     }
 
-//    private void makeError(HttpServletResponse response, Map<String, Object> map) {
-//
-//        Gson gson = new Gson();
-//        String jsonStr = gson.toJson(map);
-//
-//        response.setContentType("application/json");
-//        response.setStatus((int)map.get("status"));
-//        try{
-//            PrintWriter out = response.getWriter();
-//            out.println(jsonStr);
-//            out.close();
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-
     private void makeError(HttpServletResponse response, Map<String, Object> map) {
-        try {
-            // Jackson의 ObjectMapper를 사용하여 Map을 JSON 문자열로 변환
-            ObjectMapper objectMapper = new ObjectMapper();
-            String jsonStr = objectMapper.writeValueAsString(map);
 
-            // 응답의 Content-Type을 JSON으로 설정
-            response.setContentType("application/json");
-            response.setStatus((int) map.get("status"));
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(map);
 
-            // PrintWriter로 JSON 출력
-            try (PrintWriter out = response.getWriter()) {
-                out.println(jsonStr);
-            }
+        response.setContentType("application/json");
+        response.setStatus((int)map.get("status"));
+        try{
+            PrintWriter out = response.getWriter();
+            out.println(jsonStr);
+            out.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
+//    private void makeError(HttpServletResponse response, Map<String, Object> map) {
+//        try {
+//            // Jackson의 ObjectMapper를 사용하여 Map을 JSON 문자열로 변환
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            String jsonStr = objectMapper.writeValueAsString(map);
+//
+//            // 응답의 Content-Type을 JSON으로 설정
+//            response.setContentType("application/json");
+//            response.setStatus((int) map.get("status"));
+//
+//            // PrintWriter로 JSON 출력
+//            try (PrintWriter out = response.getWriter()) {
+//                out.println(jsonStr);
+//            }
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 }
