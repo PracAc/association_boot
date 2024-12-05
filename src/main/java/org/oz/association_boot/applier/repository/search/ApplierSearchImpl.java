@@ -34,18 +34,18 @@ public class ApplierSearchImpl extends QuerydslRepositorySupport implements Appl
         Pageable pageable = PageRequest.of(
                 pageRequestDTO.getPage() -1,
                 pageRequestDTO.getSize(),
-                Sort.by("ano").descending());
+                Sort.by("regDate").descending());
 
         JPQLQuery<ApplierEntity> query = from(applierEntity);
         query.where(applierEntity.delFlag.eq(false));
 
         // 등록번호 검색
         if (pageRequestDTO.getAno() != null){
-            query.where(applierEntity.ano.eq(pageRequestDTO.getAno()));
+            query.where(applierEntity.ano.like("%" + pageRequestDTO.getAno() + "%"));
         }
         // 사업자 등록 번호 검색
         if (pageRequestDTO.getBizNo() != null){
-            query.where(applierEntity.bizNo.eq(pageRequestDTO.getBizNo()));
+            query.where(applierEntity.bizNo.like("%" + pageRequestDTO.getBizNo() + "%"));
         }
         // 성명(대표자) 검색
         if (pageRequestDTO.getName() != null){

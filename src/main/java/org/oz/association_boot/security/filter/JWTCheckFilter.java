@@ -91,6 +91,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
             AdminLoginException exception = AdminLoginException.ACCESSTOKEN_EXPIRED;
             String errorMessage = exception.getMessage();
             int statusCode = exception.getStatus();
+            log.info("STATUS CODE:::: " + statusCode);
             makeError(response, Map.of("status", statusCode, "msg", errorMessage));
 
             e.printStackTrace();
@@ -98,6 +99,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
     }
 
     private void makeError(HttpServletResponse response, Map<String, Object> map) {
+        log.info("=====================makeError========================");
 
         Gson gson = new Gson();
         String jsonStr = gson.toJson(map);

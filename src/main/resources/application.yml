@@ -28,15 +28,40 @@ spring:
       location: upload
       enabled: true
 
+  mail:
+    host: smtp.gmail.com
+    port: 587                     # 구글 SMTP 포트 번호
+    username: ${GOOGLE_SMTP_EMAIL}  # 사용자 이메일
+    password: ${GOOGLE_SMTP_PW} # 사용자 앱 비밀번호
+    properties:
+      mail:
+        smtp:
+          auth: true              # 사용자 인증 여부
+          timeout: 5000           # 이메일 전송 타임아웃 시간
+          starttls:
+            enable: true          # TLS를 통해 안전한 통신 사용 여부
+
+cloud:
+  aws:
+    credentials:
+      access-key: ${AWS_ACCESS_KEY}
+      secret-key: ${AWS_SECRET_KEY}
+    s3:
+      bucket : oz-wizard-bucket
+      upload-folder : creator
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+
 org:
   oz:
-    accessTime: 3
-    refreshTime: 10
+    accessTime: 60
+    refreshTime: 216000
     alwaysNew: true
     upload:
       path: upload
 
 logging:
   level:
-    org.springframework.security.web: TRACE
-    org.oz.adminapi.localmaneger: TRACE
+    org.springframework.security.web: debug
