@@ -4,8 +4,8 @@ spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://117.52.20.52:3306/manna
-    username: manna
-    password: manna20@#
+    username: ${DB_USER_NAME}
+    password: ${DB_PASSWORD}
 
     hikari:
       minimum-idle: 2
@@ -61,7 +61,7 @@ org:
     alwaysNew: true
     upload:
       path: upload
-    kafkahost: 10.10.10.228
+    kafkahost: 10.10.10.60
     kafkaport: 9092
 
 

@@ -6,9 +6,8 @@ import org.oz.association_boot.applier.domain.ApplierEntity;
 import org.oz.association_boot.applier.dto.*;
 import org.oz.association_boot.applier.repository.ApplierEntityRepository;
 import org.oz.association_boot.common.domain.AttachFile;
-import org.oz.association_boot.common.dto.PageRequestDTO;
 import org.oz.association_boot.common.dto.PageResponseDTO;
-import org.oz.association_boot.utill.captcha.CaptchaUtil;
+import org.oz.association_boot.utill.captcha.AuthCodeUtil;
 import org.oz.association_boot.mail.dto.MailHtmlSendDTO;
 import org.oz.association_boot.mail.MailSendService;
 import org.springframework.stereotype.Service;
@@ -26,7 +25,7 @@ public class ApplierService {
 
     private final ApplierEntityRepository applierEntityRepository;
     private final MailSendService mailSendService;
-    private final CaptchaUtil captchaUtil;
+    private final AuthCodeUtil authCodeUtil;
 
     public PageResponseDTO<ApplierListDTO> getApplierList (ApplierListRequestDTO pageRequestDTO){
 
@@ -78,11 +77,11 @@ public class ApplierService {
         ApplierEntity applierEntity = applierEntityRepository.getApplier(modifyDTO.getAno()).get();
 
         if (modifyDTO.getStatus() == 1){
-            // 6자리 영문대문자 숫자 랜덤생성
-            String captchaText = captchaUtil.generateCaptchaText(6);
+            // 6자리 영문대소문자 숫자 랜덤생성 + ano
+            String authCode = authCodeUtil.generateTextAuthCode(6) + applierEntity.getAno();
 
             applierEntity.changeAccepted(); // 상태변경
-            applierEntity.changeAuthCode(captchaText); // 인증코드 수정
+            applierEntity.changeAuthCode(authCode); // 인증코드 수정
 
             // 보내게 될 메세지 지정
             MailHtmlSendDTO sendDTO = MailHtmlSendDTO.builder()
@@ -92,7 +91,7 @@ public class ApplierService {
                     .emailAddr(applierEntity.getEmail())
                     .build();
 
-            mailSendService.sendCaptChaMail(sendDTO,captchaText);
+            mailSendService.sendAuthCodeMail(sendDTO,authCode);
         }
         if (modifyDTO.getStatus() == 2){
             applierEntity.changeRejected(); // 상태변경

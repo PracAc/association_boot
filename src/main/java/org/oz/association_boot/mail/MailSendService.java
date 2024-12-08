@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 public interface MailSendService {
     void sendHtmlMail(MailHtmlSendDTO mailHtmlSendDTO);
 
-    void sendCaptChaMail(MailHtmlSendDTO mailHtmlSendDTO, String captchaText);
+    void sendAuthCodeMail(MailHtmlSendDTO mailHtmlSendDTO, String captchaText);
 
     void sendFileMail(MailTxtSendDTO mailTxtSendDTO, MultipartFile[] file);
 }

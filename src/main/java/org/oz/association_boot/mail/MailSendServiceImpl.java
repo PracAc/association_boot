@@ -64,7 +64,7 @@ public class MailSendServiceImpl implements MailSendService {
     }
 
     @Override
-    public void sendCaptChaMail(MailHtmlSendDTO mailHtmlSendDTO ,String captchaText) {
+    public void sendAuthCodeMail(MailHtmlSendDTO mailHtmlSendDTO , String captchaText) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
