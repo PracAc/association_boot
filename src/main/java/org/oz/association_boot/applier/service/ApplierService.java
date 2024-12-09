@@ -7,7 +7,7 @@ import org.oz.association_boot.applier.dto.*;
 import org.oz.association_boot.applier.repository.ApplierEntityRepository;
 import org.oz.association_boot.common.domain.AttachFile;
 import org.oz.association_boot.common.dto.PageResponseDTO;
-import org.oz.association_boot.utill.captcha.AuthCodeUtil;
+import org.oz.association_boot.util.authcode.AuthCodeUtil;
 import org.oz.association_boot.mail.dto.MailHtmlSendDTO;
 import org.oz.association_boot.mail.MailSendService;
 import org.springframework.stereotype.Service;

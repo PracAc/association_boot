@@ -1,4 +1,4 @@
-package org.oz.association_boot.utill.captcha;
+package org.oz.association_boot.util.authcode;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;

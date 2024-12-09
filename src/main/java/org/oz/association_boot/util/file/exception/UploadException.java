@@ -1,4 +1,4 @@
-package org.oz.association_boot.utill.file.exception;
+package org.oz.association_boot.util.file.exception;
 
 public class UploadException extends RuntimeException{
 

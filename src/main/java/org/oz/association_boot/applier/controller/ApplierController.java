@@ -4,9 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.oz.association_boot.applier.dto.*;
 import org.oz.association_boot.applier.service.ApplierService;
-import org.oz.association_boot.common.dto.PageRequestDTO;
 import org.oz.association_boot.common.dto.PageResponseDTO;
-import org.oz.association_boot.utill.file.CustomFileUtil;
+import org.oz.association_boot.util.file.CustomFileUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

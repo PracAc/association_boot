@@ -1,8 +1,7 @@
-package org.oz.association_boot.utill.file;
+package org.oz.association_boot.util.file;
 
 import com.amazonaws.AmazonServiceException;
 import jakarta.annotation.PostConstruct;
-import lombok.Cleanup;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
