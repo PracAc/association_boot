@@ -59,7 +59,7 @@ dependencies {
     // https://mvnrepository.com/artifact/javax.mail/javax.mail-api
     implementation 'javax.mail:javax.mail-api:1.6.2'
 
-// https://mvnrepository.com/artifact/com.google.code.gson/gson
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
     implementation 'com.google.code.gson:gson:2.11.0'
 
     implementation 'me.paulschwarz:spring-dotenv:3.0.0'

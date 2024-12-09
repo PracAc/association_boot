@@ -33,7 +33,7 @@ public class ApplierController {
         return ResponseEntity.ok().body(applierService.getApplierOne(ano).get());
     }
 
-    @PostMapping("/registry")
+    @PostMapping("registry")
     public ResponseEntity<Long> registryApplier(ApplierRegistryDTO registryDTO){
         log.info("======================registryApplier=========================");
 
@@ -56,7 +56,7 @@ public class ApplierController {
         return ResponseEntity.ok().body(applierService.modifyStatus(modifyDTO).get());
     }
 
-    @PostMapping("/auth")
+    @PostMapping("auth")
     public ResponseEntity<String> checkApplierAuth(@RequestBody ApplierAuthCheckDTO checkDTO){
         log.info("=========Auth Check========");
         return ResponseEntity.ok().body(applierService.checkAuth(checkDTO).get());
