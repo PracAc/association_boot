@@ -68,23 +68,23 @@ public class KafkaConsumer {
         }//end try
     }
 
-    @KafkaListener(topics = "sample-association")
-    public void ProducerConsumer(ConsumerRecord<String, String> record) {
-        log.info("CONSUME TEST====================================================");
-        log.info("Consumed message: " + record);
-
-        try {
-            // 메시지 값을 JSON으로 받음
-            String jsonMessage = record.value();
-
-            // ObjectMapper를 사용하여 JSON 문자열을 Java 객체로 변환
-//            AuthProducerDTO producerDTO = objectMapper.readValue(jsonMessage, AuthProducerDTO.class);
-
-            log.info("JSON = " + jsonMessage);
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }//end try
-    }
+//    @KafkaListener(topics = "sample-association")
+//    public void ProducerConsumer(ConsumerRecord<String, String> record) {
+//        log.info("CONSUME TEST====================================================");
+//        log.info("Consumed message: " + record);
+//
+//        try {
+//            // 메시지 값을 JSON으로 받음
+//            String jsonMessage = record.value();
+//
+//            // ObjectMapper를 사용하여 JSON 문자열을 Java 객체로 변환
+////            AuthProducerDTO producerDTO = objectMapper.readValue(jsonMessage, AuthProducerDTO.class);
+//
+//            log.info("JSON = " + jsonMessage);
+//
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }//end try
+//    }
 }
