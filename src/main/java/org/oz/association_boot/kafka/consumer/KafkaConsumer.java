@@ -51,7 +51,12 @@ public class KafkaConsumer {
         try {
             // 메시지 값을 JSON으로 받음
             String jsonMessage = record.value();
-            log.info(jsonMessage);
+
+            // ObjectMapper를 사용하여 JSON 문자열을 Java 객체로 변환
+//            AuthProducerDTO producerDTO = objectMapper.readValue(jsonMessage, AuthProducerDTO.class);
+
+            log.info("JSON = " + jsonMessage);
+
 
         } catch (Exception e) {
             e.printStackTrace();
