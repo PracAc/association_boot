@@ -10,6 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthProducerDTO {
-    private String email;
-    private String authCode;
+    private String creatorId;
+    private String creatorName;
+    private String creatorEmail;
+    private String creatorPhone;
+    private String creatorPassword;
 }

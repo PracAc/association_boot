@@ -10,9 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RequiredArgsConstructor
 @Log4j2
-public class KafkaProducer {
+public class AssociationProducer {
 
-    private final String TOPIC = "sample-topic"; // Kafka 토픽 이름
+    private final String TOPIC = "registry-creator"; // Kafka 토픽 이름
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
     public void sendMessage(Object message) {

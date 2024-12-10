@@ -20,9 +20,10 @@ public class ApplierEntity extends BasicEntity {
     private Long ano;
 
     private String bizNo;
-    private String name;
     private String openDate;
+    private String name;
     private String email;
+    private String phone;
 
     @ElementCollection
     @Builder.Default
