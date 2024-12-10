@@ -61,8 +61,8 @@ org:
     alwaysNew: true
     upload:
       path: upload
-#    kafkahost: 10.10.10.60
-    kafkahost: 127.0.0.1
+    kafkahost: 13.124.107.215
+#    kafkahost: 127.0.0.1
     kafkaport: 9092
 
 
