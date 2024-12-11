@@ -6,10 +6,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 @Component
-public interface MailSendService {
+public interface MailService {
     void sendHtmlMail(MailHtmlSendDTO mailHtmlSendDTO);
 
-    void sendAuthCodeMail(MailHtmlSendDTO mailHtmlSendDTO, String captchaText);
+    void sendAuthCodeMail(MailHtmlSendDTO mailHtmlSendDTO, String AuthCode);
 
     void sendFileMail(MailTxtSendDTO mailTxtSendDTO, MultipartFile[] file);
+
+    void sendEmailAuthCodeMail(MailHtmlSendDTO mailHtmlSendDTO, String authCode);
+
 }

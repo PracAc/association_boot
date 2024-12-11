@@ -1,4 +1,4 @@
-package org.oz.association_boot.applier.dto;
+package org.oz.association_boot.board.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,15 +12,14 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApplierRegistryDTO {
+public class BoardAddDTO {
+    private String title;
+    private String writer;
+    private String content;
 
-    private String bizNo;
-    private String name;
-    private String openDate;
-    private String email;
-    private String phone;
-    private String snsAddr;
+    private Integer btype;
 
     private List<MultipartFile> files;
+
     private List<String> uploadFileNames;
 }

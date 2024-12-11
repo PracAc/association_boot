@@ -12,13 +12,15 @@ import org.oz.association_boot.kafka.producer.AssociationProducer;
 import org.oz.association_boot.kafka.util.KafkaJsonUtil;
 import org.oz.association_boot.util.authcode.AuthCodeUtil;
 import org.oz.association_boot.mail.dto.MailHtmlSendDTO;
-import org.oz.association_boot.mail.MailSendService;
+import org.oz.association_boot.mail.MailService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -29,11 +31,12 @@ import java.util.stream.Collectors;
 public class ApplierService {
 
     private final ApplierEntityRepository applierEntityRepository;
-    private final MailSendService mailSendService;
+    private final MailService mailService;
     private final AuthCodeUtil authCodeUtil;
     private final PasswordEncoder passwordEncoder;
     private final AssociationProducer associationProducer;
     private final KafkaJsonUtil kafkaJsonUtil;
+    private final Map<String, String> emailAuthCodes = new HashMap<>();
 
     public PageResponseDTO<ApplierListDTO> getApplierList (ApplierListRequestDTO pageRequestDTO){
 
@@ -76,6 +79,8 @@ public class ApplierService {
             applierEntity.addFile(fileName);
             log.info(fileName);
         });
+        // 등록시 이메일 인증 시도한 Map remove처리
+        emailAuthCodes.remove(registryDTO.getEmail());
 
         applierEntityRepository.save(applierEntity);
 
@@ -101,7 +106,7 @@ public class ApplierService {
                     .emailAddr(applierEntity.getEmail())
                     .build();
 
-            mailSendService.sendAuthCodeMail(sendDTO,authCode);
+            mailService.sendAuthCodeMail(sendDTO,authCode);
         }
         if (modifyDTO.getStatus() == 2){
             applierEntity.changeRejected(); // 상태변경
@@ -152,5 +157,34 @@ public class ApplierService {
         }
 
         return Optional.of("정상적으로 인증 되었습니다.");
+    }
+
+    public Optional<String> sendEmailAuth(String email){
+        String authCode = authCodeUtil.generateTextAuthCode(6);
+
+        // 메모리상 이메일, 인증코드 맵객체 저장
+        emailAuthCodes.put(email, authCode);
+
+        // 보내게 될 메세지 지정
+        MailHtmlSendDTO sendDTO = MailHtmlSendDTO.builder()
+                .subject("00협회 이메일 인증")
+                .content("요청하신 인증 코드입니다")
+                .emailAddr(email)
+                .build();
+
+        mailService.sendEmailAuthCodeMail(sendDTO,authCode);
+
+        return Optional.of("이메일이 전송 되었습니다.");
+    }
+
+    public Optional<Boolean> checkEmailAuth(String email, String authCode){
+
+        String storedCode = emailAuthCodes.get(email);
+
+        if (storedCode != null && storedCode.equals(authCode)){
+
+            return Optional.of(true);
+        }
+        return Optional.of(false);
     }
 }

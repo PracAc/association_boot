@@ -13,7 +13,7 @@
 
     <!-- 이메일 내용 -->
     <div style="font-size: 16px; line-height: 1.6; margin-bottom: 30px;">
-        <div style="font-size: 18px; font-weight: bold; margin-bottom: 20px;">
+        <div th:if="${cname != null}" style="font-size: 18px; font-weight: bold; margin-bottom: 20px;">
             <span th:text="${cname}"></span>
             <span>님, 반갑습니다.</span>
         </div>
@@ -24,7 +24,7 @@
     </div>
 
     <!-- 인증 경로 부분 -->
-    <div style="text-align: center; margin-top: 20px;">
+    <div th:if="${authLink != null}" style="text-align: center; margin-top: 20px;">
         <p style="font-size: 14px; color: #333;">경로: <a th:href="${authLink}">[인증하러 가기]</a></p>
     </div>
 
@@ -46,7 +46,7 @@
     </div>
 
     <!-- 이메일 바닥글 -->
-    <div style="text-align: center; margin-top: 30px; font-size: 14px; color: #777;">
+    <div th:if="! onlyAuthCode" style="text-align: center; margin-top: 30px; font-size: 14px; color: #777;">
         <p style="margin: 5px 0;">감사합니다.</p>
         <p style="margin: 5px 0;">이메일 발송 : [Your Company Name]</p>
     </div>
