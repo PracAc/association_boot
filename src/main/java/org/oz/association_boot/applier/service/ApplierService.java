@@ -95,6 +95,7 @@ public class ApplierService {
             // 보내게 될 메세지 지정
             MailHtmlSendDTO sendDTO = MailHtmlSendDTO.builder()
                     .ano(applierEntity.getAno())
+                    .cname(applierEntity.getName())
                     .subject(applierEntity.getName() + "님 협회등록 승인안내")
                     .content("정상적인 등록을 위해 아래 경로를 통한 인증을 해주시길 바랍니다.")
                     .emailAddr(applierEntity.getEmail())

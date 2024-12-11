@@ -40,9 +40,9 @@
     </div>
 
     <!-- 인증코드 Captcha 텍스트 -->
-    <div th:if="${captchaText != null}" style="text-align: center; margin-top: 20px;">
+    <div th:if="${authCodeText != null}" style="text-align: center; margin-top: 20px;">
         <span style="font-size: 36px; font-weight: bold; color: #333; background-color: #f4f4f4; padding: 10px; border-radius: 5px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);"
-              th:text="${captchaText}"></span> <!-- 캡챠 텍스트를 크게 보이도록 -->
+              th:text="${authCodeText}"></span> <!-- 캡챠 텍스트를 크게 보이도록 -->
     </div>
 
     <!-- 이메일 바닥글 -->

@@ -1,6 +1,7 @@
 package org.oz.association_boot.mail;
 
 import jakarta.mail.MessagingException;
+import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -39,7 +40,7 @@ public class MailSendServiceImpl implements MailSendService {
             Context context = new Context();
             context.setVariable("subject", mailHtmlSendDTO.getSubject());
             context.setVariable("content", mailHtmlSendDTO.getContent());
-            context.setVariable("cname", mailHtmlSendDTO.getName());
+            context.setVariable("cname", mailHtmlSendDTO.getCname());
             context.setVariable("htmlMsg", mailHtmlSendDTO.getHtmlMsg());
 
             // 1. 로고 이미지 또는 기타 이미지 파일을 Base64로 인코딩하여 이메일에 첨부
@@ -58,13 +59,13 @@ public class MailSendServiceImpl implements MailSendService {
             log.info("이메일 전송 성공!");
 
         } catch (Exception e) {
-            log.info("[-] 이메일 전송 중 오류 발생: " + e.getMessage());
+            log.info("이메일 전송 중 오류 발생: " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void sendAuthCodeMail(MailHtmlSendDTO mailHtmlSendDTO , String captchaText) {
+    public void sendAuthCodeMail(MailHtmlSendDTO mailHtmlSendDTO , String authCodeText) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
@@ -73,15 +74,23 @@ public class MailSendServiceImpl implements MailSendService {
             Context context = new Context();
             context.setVariable("subject", mailHtmlSendDTO.getSubject());
             context.setVariable("content", mailHtmlSendDTO.getContent());
-            context.setVariable("cname", mailHtmlSendDTO.getName());
+            context.setVariable("cname", mailHtmlSendDTO.getCname());
             // React 인증 페이지 경로
             context.setVariable("authLink", "http://localhost:5173/auth/"+ mailHtmlSendDTO.getAno());
-            context.setVariable("captchaText", captchaText);
+            context.setVariable("authCodeText", authCodeText);
 
             // 이메일 템플릿 처리 및 전송
             String htmlContent = templateEngine.process("email", context);
             messageHelper.setTo(mailHtmlSendDTO.getEmailAddr());
+
+            // 보낸 사람 이름 설정 *이메일은 변경불가능(인증문제)
+            String fromEmail = "no-reply@example.com"; // 만약 실제 서비스한다면 이런식으로 쓰고싶다 일뿐
+            String fromName = "00협회";
+            messageHelper.setFrom(new InternetAddress(fromEmail, fromName));
+
+            // 제목 설정
             messageHelper.setSubject(mailHtmlSendDTO.getSubject());
+            // htmlContent 설정
             messageHelper.setText(htmlContent, true);
             mailSender.send(message);
 

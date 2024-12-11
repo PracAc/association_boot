@@ -15,6 +15,6 @@ public class MailHtmlSendDTO {
     private String emailAddr;
     private String subject;
     private String content;
-    private String name;
+    private String cname;
     private String htmlMsg;
 }
