@@ -58,9 +58,6 @@ public class JWTCheckFilter extends OncePerRequestFilter {
         if(uri.equals("/api/association/applier/auth/emailchk")){
             return true;
         }
-        if(uri.startsWith("/api/board")){
-            return true;
-        }
 
         return false;
     }

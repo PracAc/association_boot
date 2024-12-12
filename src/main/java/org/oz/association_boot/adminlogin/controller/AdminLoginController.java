@@ -79,6 +79,7 @@ public class AdminLoginController {
         tokenResponseDTO.setAccessToken(accessToken);
         tokenResponseDTO.setRefreshToken(refreshToken);
         tokenResponseDTO.setAdminId(adminLoginDTO.getAdminID());
+        tokenResponseDTO.setAdminName(adminLoginDTO.getAdminName());
 
         log.info("Tokens created successfully for adminId: {}", adminLoginDTO.getAdminID());
         log.info("TOKEN: {}", accessToken);

@@ -4,51 +4,60 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title th:text="${subject}">이메일 제목</title>
 </head>
-<body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; color: #333;">
-<div style="width: 100%; max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
-    <!-- 이메일 헤더 -->
-    <div style="text-align: center; padding-bottom: 20px;">
-        <h1 th:text="${subject}" style="font-size: 24px; color: #333; margin-bottom: 10px;">이메일 제목</h1>
-    </div>
-
-    <!-- 이메일 내용 -->
-    <div style="font-size: 16px; line-height: 1.6; margin-bottom: 30px;">
-        <div th:if="${cname != null}" style="font-size: 18px; font-weight: bold; margin-bottom: 20px;">
-            <span th:text="${cname}"></span>
-            <span>님, 반갑습니다.</span>
+<body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4; color: #333;">
+<div style="width: 100%; background-color: #f4f4f4; padding: 20px;">
+    <div style="width: 100%; max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
+        <!-- 이메일 헤더 -->
+        <div style="text-align: center; padding-bottom: 20px;">
+            <h1 style="font-size: 24px; color: #333; margin-bottom: 10px;" th:text="${subject}">이메일 제목</h1>
         </div>
-        <div style="padding: 20px; background-color: #fafafa; border-radius: 8px; margin-bottom: 20px;">
-            <p th:text="${content}"></p>
-            <p style="color: #32CD32; font-weight: bold;" th:text="${htmlMsg}"></p>
+
+        <!-- 이메일 내용 -->
+        <div style="font-size: 16px; line-height: 1.6; color: #333;">
+            <div th:if="${cname != null}" style="font-size: 18px; font-weight: bold; margin-bottom: 20px;">
+                <span th:text="${cname}"></span>
+                <span>님, 반갑습니다.</span>
+            </div>
+            <div style="padding: 20px; background-color: #fafafa; border-radius: 8px; margin-bottom: 20px;">
+                <p th:text="${content}"></p>
+
+                <!-- 반려 사유 -->
+                <div th:if="${rejectReason != null}" style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); text-align: center; margin-top: 20px;">
+                    <strong style="color: #555;">다음과 같은 이유로 반려되었습니다:</strong>
+                    <p style="font-size: 16px; font-weight: bold; color: #333; line-height: 1.5;">
+                        <span th:text="${rejectReason}"></span>
+                    </p>
+                    <p style="font-size: 14px; color: #888;">내용을 확인 후 다시 시도해 주세요.</p>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <!-- 인증 경로 부분 -->
-    <div th:if="${authLink != null}" style="text-align: center; margin-top: 20px;">
-        <p style="font-size: 14px; color: #333;">경로: <a th:href="${authLink}">[인증하러 가기]</a></p>
-    </div>
+        <!-- 인증 경로 -->
+        <div th:if="${authLink != null}" style="text-align: center; margin-top: 20px;">
+            <p style="font-size: 14px; color: #333;">경로: <a href="#" th:href="${authLink}" style="color: #0066cc; text-decoration: none;">[인증하러 가기]</a></p>
+        </div>
 
-    <!-- 이메일 로고 이미지 -->
-    <div th:if="${logoImage != null}" style="text-align: center; display: block; margin: 20px auto;">
-        <img th:src="'data:image/jpg;base64,' + ${logoImage}" alt="로고 이미지" style="max-width: 150px; height: auto;"/>
-    </div>
+        <!-- 이메일 로고 이미지 -->
+        <div th:if="${logoImage != null}" style="text-align: center; margin-top: 20px;">
+            <img th:src="'data:image/jpg;base64,' + ${logoImage}" alt="로고 이미지" style="max-width: 150px; height: auto;"/>
+        </div>
 
-    <!-- 인증코드 Captcha 이미지 -->
-    <div th:if="${captchaImage != null}" style="text-align: center; display: block; margin-top: 20px;">
-        <img th:src="'data:image/jpg;base64,' + ${captchaImage}" alt="CaptCha 이미지"
-             style="max-width: 150px; height: auto;"/>
-    </div>
+        <!-- 인증 코드 이미지 -->
+        <div th:if="${captchaImage != null}" style="text-align: center; margin-top: 20px;">
+            <img th:src="'data:image/jpg;base64,' + ${captchaImage}" alt="Captcha 이미지" style="max-width: 150px; height: auto;"/>
+        </div>
 
-    <!-- 인증코드 Captcha 텍스트 -->
-    <div th:if="${authCodeText != null}" style="text-align: center; margin-top: 20px;">
-        <span style="font-size: 36px; font-weight: bold; color: #333; background-color: #f4f4f4; padding: 10px; border-radius: 5px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);"
-              th:text="${authCodeText}"></span> <!-- 캡챠 텍스트를 크게 보이도록 -->
-    </div>
+        <!-- 인증 코드 텍스트 -->
+        <div th:if="${authCodeText != null}" style="text-align: center; margin-top: 20px;">
+                <span style="font-size: 36px; font-weight: bold; color: #333; background-color: #f4f4f4; padding: 10px; border-radius: 5px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);"
+                      th:text="${authCodeText}"></span>
+        </div>
 
-    <!-- 이메일 바닥글 -->
-    <div th:if="! onlyAuthCode" style="text-align: center; margin-top: 30px; font-size: 14px; color: #777;">
-        <p style="margin: 5px 0;">감사합니다.</p>
-        <p style="margin: 5px 0;">이메일 발송 : [Your Company Name]</p>
+        <!-- 이메일 바닥글 -->
+        <div th:if="!onlyAuthCode" style="text-align: center; margin-top: 30px; font-size: 14px; color: #777;">
+            <p style="margin: 5px 0;">감사합니다.</p>
+            <p style="margin: 5px 0;">이메일 발송 : [Your Company Name]</p>
+        </div>
     </div>
 </div>
 </body>

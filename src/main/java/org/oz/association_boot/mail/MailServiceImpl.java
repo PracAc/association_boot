@@ -44,16 +44,17 @@ public class MailServiceImpl implements MailService {
             context.setVariable("subject", mailHtmlSendDTO.getSubject());
             context.setVariable("content", mailHtmlSendDTO.getContent());
             context.setVariable("cname", mailHtmlSendDTO.getCname());
-            context.setVariable("htmlMsg", mailHtmlSendDTO.getHtmlMsg());
+            context.setVariable("rejectReason", mailHtmlSendDTO.getRejectReason());
 
-            // 1. 로고 이미지 또는 기타 이미지 파일을 Base64로 인코딩하여 이메일에 첨부
-            String base64Image = encodeImageToBase64("static/images/test.jpg");
-            context.setVariable("logoImage", base64Image);
-
-            // 2. 이메일 템플릿을 처리하여 HTML 내용 생성
+            // 이메일 템플릿으로 HTML 내용 생성
             String htmlContent = templateEngine.process("email", context);
 
-            // 3. 이메일 보내기
+            // 보낸 사람 이름 설정 *이메일은 변경불가능(인증문제)
+            String fromEmail = "no-reply@example.com"; // 만약 실제 서비스한다면 이런식으로 쓰고싶다 일뿐
+            String fromName = "부산 지역 아티스트 협회";
+            messageHelper.setFrom(new InternetAddress(fromEmail, fromName));
+
+            // 이메일 보내기
             messageHelper.setTo(mailHtmlSendDTO.getEmailAddr());
             messageHelper.setSubject(mailHtmlSendDTO.getSubject());
             messageHelper.setText(htmlContent, true); // HTML 콘텐츠 설정
@@ -149,7 +150,7 @@ public class MailServiceImpl implements MailService {
 
             // 보낸 사람 이름 설정 *이메일은 변경불가능(인증문제)
             String fromEmail = "no-reply@example.com"; // 만약 실제 서비스한다면 이런식으로 쓰고싶다 일뿐
-            String fromName = "00협회";
+            String fromName = "부산 지역 아티스트 협회";
             messageHelper.setFrom(new InternetAddress(fromEmail, fromName));
 
             // 제목 설정

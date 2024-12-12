@@ -27,7 +27,7 @@ public class ApplierSearchImpl extends QuerydslRepositorySupport implements Appl
     @Override
     public PageResponseDTO<ApplierListDTO> getListApplier(ApplierListRequestDTO pageRequestDTO) {
 
-        log.info("===============Board List===========");
+        log.info("===============Applier List===========");
 
         QApplierEntity applierEntity = QApplierEntity.applierEntity;
 
@@ -39,6 +39,8 @@ public class ApplierSearchImpl extends QuerydslRepositorySupport implements Appl
         JPQLQuery<ApplierEntity> query = from(applierEntity);
         query.where(applierEntity.delFlag.eq(false));
 
+        log.info(applierEntity.regStatus);
+        log.info(pageRequestDTO.getRegStatus());
         // 등록번호 검색
         if (pageRequestDTO.getAno() != null){
             query.where(applierEntity.ano.like("%" + pageRequestDTO.getAno() + "%"));

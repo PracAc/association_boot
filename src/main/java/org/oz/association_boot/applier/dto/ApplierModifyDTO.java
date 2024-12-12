@@ -9,4 +9,5 @@ import org.oz.association_boot.applier.domain.ApplierStatus;
 public class ApplierModifyDTO {
     private Long ano;
     private int status;
+    private String rejectReason;
 }

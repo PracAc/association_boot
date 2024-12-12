@@ -108,8 +108,20 @@ public class ApplierService {
 
             mailService.sendAuthCodeMail(sendDTO,authCode);
         }
+
         if (modifyDTO.getStatus() == 2){
             applierEntity.changeRejected(); // 상태변경
+
+            MailHtmlSendDTO sendDTO = MailHtmlSendDTO.builder()
+                    .ano(applierEntity.getAno())
+                    .cname(applierEntity.getName())
+                    .subject(applierEntity.getName() + "님 협회등록 반려안내")
+                    .content(applierEntity.getName() + "님 협회등록 반려에 대한 내용입니다.")
+                    .rejectReason(modifyDTO.getRejectReason())
+                    .emailAddr(applierEntity.getEmail())
+                    .build();
+
+            mailService.sendHtmlMail(sendDTO);
         }
 
         return Optional.of(applierEntity.getAno());

@@ -6,6 +6,7 @@ import lombok.Data;
 public class TokenResponseDTO {
 
     private String adminId;
+    private String adminName;
     private String accessToken;
     private String refreshToken;
     private int status;
