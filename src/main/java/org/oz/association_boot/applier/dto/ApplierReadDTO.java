@@ -20,6 +20,7 @@ public class ApplierReadDTO {
     private String name;
     private String openDate;
     private String email;
+    private String snsAddr;
 
     private ApplierStatus regStatus;
 

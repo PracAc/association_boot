@@ -4,6 +4,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -56,4 +58,17 @@ public class JWTUtil {
 
         return claims;
     }
+
+//    public static String getAdminNameFromJWT() {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//
+//        // JwtAuthenticationToken인지 확인
+//        if (authentication instanceof JwtAuthenticationToken) {
+//            Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
+//            // JWT Claims에서 "adminName"을 추출
+//            return (String) jwt.getClaims().get("adminName");
+//        }
+//
+//        return null; // JWT 인증이 아니거나, adminName이 없을 경우
+//    }
 }

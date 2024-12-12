@@ -3,8 +3,10 @@ package org.oz.association_boot.applier.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.oz.association_boot.applier.domain.ApplierEntity;
+import org.oz.association_boot.applier.domain.ApplierHistoryEntity;
 import org.oz.association_boot.applier.dto.*;
 import org.oz.association_boot.applier.repository.ApplierEntityRepository;
+import org.oz.association_boot.applier.repository.ApplierHistoryEntityRepository;
 import org.oz.association_boot.common.domain.AttachFile;
 import org.oz.association_boot.common.dto.PageResponseDTO;
 import org.oz.association_boot.kafka.dto.AuthProducerDTO;
@@ -13,6 +15,8 @@ import org.oz.association_boot.kafka.util.KafkaJsonUtil;
 import org.oz.association_boot.util.authcode.AuthCodeUtil;
 import org.oz.association_boot.mail.dto.MailHtmlSendDTO;
 import org.oz.association_boot.mail.MailService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +35,7 @@ import java.util.stream.Collectors;
 public class ApplierService {
 
     private final ApplierEntityRepository applierEntityRepository;
+    private final ApplierHistoryEntityRepository historyEntityRepository;
     private final MailService mailService;
     private final AuthCodeUtil authCodeUtil;
     private final PasswordEncoder passwordEncoder;
@@ -75,14 +80,25 @@ public class ApplierService {
                 .phone(registryDTO.getPhone())
                 .build();
 
+        applierEntity.setCreator(registryDTO.getName());
+
         registryDTO.getUploadFileNames().forEach(fileName -> {
             applierEntity.addFile(fileName);
-            log.info(fileName);
         });
         // 등록시 이메일 인증 시도한 Map remove처리
         emailAuthCodes.remove(registryDTO.getEmail());
 
         applierEntityRepository.save(applierEntity);
+
+        // 등록 DB저장 완료시 History 테이블 저장
+        ApplierHistoryEntity historyEntity = ApplierHistoryEntity.builder()
+                .email(registryDTO.getEmail())
+                .name(registryDTO.getName())
+                .modifier(registryDTO.getName())
+                .status("Registry")
+                .build();
+
+        historyEntityRepository.save(historyEntity);
 
         return Optional.of(applierEntity.getAno());
     }
@@ -107,6 +123,16 @@ public class ApplierService {
                     .build();
 
             mailService.sendAuthCodeMail(sendDTO,authCode);
+
+            // 등록 승인시 히스토리
+            ApplierHistoryEntity historyEntity = ApplierHistoryEntity.builder()
+                    .email(applierEntity.getEmail())
+                    .name(applierEntity.getName())
+//                    .modifier()
+                    .status("Accepted")
+                    .build();
+
+            historyEntityRepository.save(historyEntity);
         }
 
         if (modifyDTO.getStatus() == 2){
@@ -122,6 +148,16 @@ public class ApplierService {
                     .build();
 
             mailService.sendHtmlMail(sendDTO);
+
+            // 등록 반려시 히스토리
+            ApplierHistoryEntity historyEntity = ApplierHistoryEntity.builder()
+                    .email(applierEntity.getEmail())
+                    .name(applierEntity.getName())
+//                    .modifier()
+                    .status("Rejected")
+                    .build();
+
+            historyEntityRepository.save(historyEntity);
         }
 
         return Optional.of(applierEntity.getAno());
@@ -179,7 +215,7 @@ public class ApplierService {
 
         // 보내게 될 메세지 지정
         MailHtmlSendDTO sendDTO = MailHtmlSendDTO.builder()
-                .subject("00협회 이메일 인증")
+                .subject("부산 지역 아티스트 협회 이메일 인증")
                 .content("요청하신 인증 코드입니다")
                 .emailAddr(email)
                 .build();
@@ -198,5 +234,17 @@ public class ApplierService {
             return Optional.of(true);
         }
         return Optional.of(false);
+    }
+
+    // 현재 인증된 사용자의 username을 가져오는 메서드
+    private String getLoggedInUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // 인증된 사용자가 있으면, 사용자 이름을 반환
+        if (authentication != null && authentication.isAuthenticated()) {
+            return authentication.getName();  // 일반적으로 username이 반환됨
+        }
+
+        return null;  // 인증되지 않은 경우 null 반환
     }
 }

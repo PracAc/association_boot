@@ -35,4 +35,8 @@ public abstract class BasicEntity {
     public void changeDelFlag(Boolean newDelFlag){
         this.delFlag = newDelFlag;
     }
+
+    public void setCreator(String newCreator){
+        this.creator = newCreator;
+    }
 }
