@@ -2,7 +2,7 @@ version: '3.8'
 services:
   backend:
     build:
-      context: /home/ec2-user/association_boot # Spring Boot 프로젝트 루트 경로
+      context: / # Spring Boot 프로젝트 루트 경로
       dockerfile: Dockerfile
     ports:
       - "8080:8080" # 백엔드 API 서버
