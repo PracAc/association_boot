@@ -204,6 +204,17 @@ public class ApplierService {
             return Optional.of("인증 처리중 문제가 생겼습니다. \n확인 후 다시 시도해주시길 바랍니다.");
         }
 
+        // 보내게 될 메세지 지정
+        MailHtmlSendDTO sendDTO = MailHtmlSendDTO.builder()
+                .ano(applierEntity.getAno())
+                .cname(applierEntity.getName())
+                .subject(applierEntity.getName() + "님 (주)콜라보하리 회원 안내")
+                .content("아이디 : "+ creatorId + "\n비밀번호 : " + applierEntity.getAuthCode() + "\n를 통해 로그인이 가능합니다")
+                .emailAddr(applierEntity.getEmail())
+                .build();
+
+        mailService.sendHtmlMail(sendDTO);
+
         return Optional.of("정상적으로 인증 되었습니다.");
     }
 
