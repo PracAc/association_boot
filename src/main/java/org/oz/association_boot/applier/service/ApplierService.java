@@ -128,7 +128,7 @@ public class ApplierService {
             ApplierHistoryEntity historyEntity = ApplierHistoryEntity.builder()
                     .email(applierEntity.getEmail())
                     .name(applierEntity.getName())
-//                    .modifier()
+                    .modifier(getLoggedInUsername())
                     .status("Accepted")
                     .build();
 
@@ -153,7 +153,7 @@ public class ApplierService {
             ApplierHistoryEntity historyEntity = ApplierHistoryEntity.builder()
                     .email(applierEntity.getEmail())
                     .name(applierEntity.getName())
-//                    .modifier()
+                    .modifier(getLoggedInUsername())
                     .status("Rejected")
                     .build();
 
@@ -208,7 +208,7 @@ public class ApplierService {
         MailHtmlSendDTO sendDTO = MailHtmlSendDTO.builder()
                 .ano(applierEntity.getAno())
                 .cname(applierEntity.getName())
-                .subject(applierEntity.getName() + "님 (주)콜라보하리 회원 안내")
+                .subject(applierEntity.getName() + "님 (주)콜라보(하)리 회원 안내")
                 .content("아이디 : "+ creatorId + "\n비밀번호 : " + applierEntity.getAuthCode() + "\n를 통해 로그인이 가능합니다")
                 .emailAddr(applierEntity.getEmail())
                 .build();
