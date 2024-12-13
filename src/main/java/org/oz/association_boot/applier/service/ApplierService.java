@@ -210,6 +210,7 @@ public class ApplierService {
     public Optional<String> sendEmailAuth(String email){
         String authCode = authCodeUtil.generateTextAuthCode(6);
 
+
         // 메모리상 이메일, 인증코드 맵객체 저장
         emailAuthCodes.put(email, authCode);
 
