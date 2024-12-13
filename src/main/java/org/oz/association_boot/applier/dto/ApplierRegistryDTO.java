@@ -19,6 +19,7 @@ public class ApplierRegistryDTO {
     private String openDate;
     private String email;
     private String phone;
+    private String snsAddr;
 
     private List<MultipartFile> files;
     private List<String> uploadFileNames;

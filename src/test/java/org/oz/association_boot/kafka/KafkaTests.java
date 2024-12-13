@@ -1,28 +1,37 @@
-package org.oz.association_boot.kafka;
-
-import lombok.extern.log4j.Log4j2;
-import org.springframework.boot.test.context.SpringBootTest;
-
-@SpringBootTest
-@Log4j2
-public class KafkaTests {
+//package org.oz.association_boot.kafka;
+//
+//import com.fasterxml.jackson.core.JsonProcessingException;
+//import com.fasterxml.jackson.databind.ObjectMapper;
+//import lombok.extern.log4j.Log4j2;
+//import org.junit.jupiter.api.Test;
+//import org.oz.association_boot.applier.domain.ApplierEntity;
+//import org.oz.association_boot.applier.dto.ApplierModifyDTO;
+//import org.oz.association_boot.applier.repository.ApplierEntityRepository;
+//import org.oz.association_boot.kafka.dto.AuthProducerDTO;
+//import org.oz.association_boot.kafka.producer.AssociationProducer;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.boot.test.context.SpringBootTest;
+//
+//@SpringBootTest
+//@Log4j2
+//public class KafkaTests {
 //    @Autowired
-//    private AssociationProducer producer;
+//    AssociationProducer associationProducer;
 //    @Autowired
-//    private ApplierEntityRepository applierEntityRepository;
-
+//    ApplierEntityRepository applierEntityRepository;
+//
 //    @Test
 //    public void producerTest() throws JsonProcessingException {
-//        TestDTO dto = TestDTO.builder()
-//                .id(2L)
-//                .name("TEST NAME")
-//                .code("TEST CODE")
+//        AuthProducerDTO dto = AuthProducerDTO.builder()
+//                .creatorId("2L")
+//                .creatorEmail("TEST NAME")
+//                .creatorPassword("TEST CODE")
 //                .build();
 //
 //        ObjectMapper mapper = new ObjectMapper();
 //        String jsonString = mapper.writeValueAsString(dto);
 //
-//        producer.sendMessage(jsonString);
+//        associationProducer.sendMessage(jsonString);
 //    }
 //
 //    @Test
@@ -43,17 +52,17 @@ public class KafkaTests {
 //
 //        applierEntityRepository.save(entity);
 //
-//        TestDTO dto = TestDTO.builder()
-//                .id(entity.getAno())
-//                .name(entity.getName())
-//                .code(entity.getRegStatus().toString())
+//        AuthProducerDTO dto = AuthProducerDTO.builder()
+//                .creatorId(entity.getName())
+//                .creatorName(entity.getName())
+//                .creatorPassword(entity.getRegStatus().toString())
 //                .build();
 //
 //        ObjectMapper mapper = new ObjectMapper();
 //        String jsonString = mapper.writeValueAsString(dto);
 //
-//        producer.sendMessage(jsonString);
+//        associationProducer.sendMessage(jsonString);
 //
 //        log.info(entity.toString());
 //    }
-}
+//}

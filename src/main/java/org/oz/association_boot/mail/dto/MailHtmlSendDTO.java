@@ -12,9 +12,11 @@ import lombok.NoArgsConstructor;
 public class MailHtmlSendDTO {
 
     private Long ano;
+    private String cname;
     private String emailAddr;
+
     private String subject;
     private String content;
-    private String name;
-    private String htmlMsg;
+
+    private String rejectReason;
 }

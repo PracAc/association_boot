@@ -210,6 +210,7 @@ public class ApplierService {
     public Optional<String> sendEmailAuth(String email){
         String authCode = authCodeUtil.generateTextAuthCode(6);
 
+
         // 메모리상 이메일, 인증코드 맵객체 저장
         emailAuthCodes.put(email, authCode);
 
@@ -234,5 +235,17 @@ public class ApplierService {
             return Optional.of(true);
         }
         return Optional.of(false);
+    }
+
+    // 현재 인증된 사용자의 username을 가져오는 메서드
+    private String getLoggedInUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // 인증된 사용자가 있으면, 사용자 이름을 반환
+        if (authentication != null && authentication.isAuthenticated()) {
+            return authentication.getName();  // 일반적으로 username이 반환됨
+        }
+
+        return null;  // 인증되지 않은 경우 null 반환
     }
 }

@@ -71,6 +71,7 @@ public class AdminLoginController {
 
         Map<String, Object> claimMap = new HashMap<>();
         claimMap.put("adminId", adminLoginDTO.getAdminID());
+        claimMap.put("adminName", adminLoginDTO.getAdminName());
 
         String accessToken = jwtUtil.createToken(claimMap, accessTime);
         String refreshToken = jwtUtil.createToken(claimMap, refreshTime);
@@ -79,6 +80,7 @@ public class AdminLoginController {
         tokenResponseDTO.setAccessToken(accessToken);
         tokenResponseDTO.setRefreshToken(refreshToken);
         tokenResponseDTO.setAdminId(adminLoginDTO.getAdminID());
+        tokenResponseDTO.setAdminName(adminLoginDTO.getAdminName());
 
         log.info("Tokens created successfully for adminId: {}", adminLoginDTO.getAdminID());
         log.info("TOKEN: {}", accessToken);
@@ -111,6 +113,8 @@ public class AdminLoginController {
         try {
             Map<String, Object> payload = jwtUtil.validateToken(accessTokenStr);
             String adminId = payload.get("adminId").toString();
+            String adminName = payload.get("adminName").toString();
+            log.info("adminName ::" + adminName);
 
             TokenResponseDTO tokenResponseDTO = new TokenResponseDTO();
             tokenResponseDTO.setAccessToken(accessTokenStr);
@@ -126,7 +130,7 @@ public class AdminLoginController {
                 String newRefreshToken = null;
 
                 if (alwaysNew) {
-                    Map<String, Object> claimMap = Map.of("adminId", adminId);
+                    Map<String, Object> claimMap = Map.of("adminId", adminId,"adminName", adminName);
                     newAccessToken = jwtUtil.createToken(claimMap, accessTime);
                     newRefreshToken = jwtUtil.createToken(claimMap, refreshTime);
                 }
@@ -149,9 +153,11 @@ public class AdminLoginController {
             try{
                 Map<String, Object> payloadRefresh = jwtUtil.validateToken(refreshToken);
                 String adminId = payloadRefresh.get("adminId").toString();
+                String adminName = payloadRefresh.get("adminName").toString();
+                log.info("adminName ::" + adminName);
 
                 // 새 액세스 토큰 발급
-                String newAccessToken = jwtUtil.createToken(Map.of("adminId", adminId), accessTime);
+                String newAccessToken = jwtUtil.createToken(Map.of("adminId", adminId,"adminName", adminName), accessTime);
 
                 TokenResponseDTO tokenResponseDTO = new TokenResponseDTO();
                 tokenResponseDTO.setAccessToken(newAccessToken);

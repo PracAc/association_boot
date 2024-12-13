@@ -9,7 +9,10 @@ import org.oz.association_boot.util.file.CustomFileUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/association/applier")
@@ -59,5 +62,18 @@ public class ApplierController {
     public ResponseEntity<String> checkApplierAuth(@RequestBody ApplierAuthCheckDTO checkDTO){
         log.info("=========Auth Check========");
         return ResponseEntity.ok().body(applierService.checkAuth(checkDTO).get());
+    }
+
+    @PostMapping("auth/email")
+    public ResponseEntity<String> sendEmailAuthCode(@RequestBody ApplierEmailAuthDTO emailAuthDTO) {
+        log.info("=======Email Auth Code========");
+
+        return ResponseEntity.ok().body(applierService.sendEmailAuth(emailAuthDTO.getEmail()).get());
+    }
+    @PostMapping("auth/emailchk")
+    public ResponseEntity<Boolean> checkEmailAuthCode(@RequestBody ApplierEmailAuthDTO emailAuthDTO){
+        log.info("=======Email Auth Code========");
+
+        return ResponseEntity.ok().body(applierService.checkEmailAuth(emailAuthDTO.getEmail(), emailAuthDTO.getAuthCode()).get());
     }
 }
