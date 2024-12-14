@@ -50,6 +50,7 @@ public class ApplierRepositoryTests {
         }//end for
 
     }
+
     @Disabled
     @Test
     public void testList() {
@@ -57,7 +58,6 @@ public class ApplierRepositoryTests {
         ApplierListRequestDTO pageRequestDTO = ApplierListRequestDTO.builder()
                 .page(1)
                 .size(10)
-                .regDate(LocalDate.parse("2024-12-03"))
                 .build();
 
         PageResponseDTO<ApplierListDTO> response = applierEntityRepository.getListApplier(pageRequestDTO);

@@ -35,8 +35,8 @@ public class ApplierSearchImpl extends QuerydslRepositorySupport implements Appl
                 pageRequestDTO.getPage() - 1,
                 pageRequestDTO.getSize(),
                 Sort.by(
-                        Sort.Order.desc("regDate"),   // regDate 내림차순
-                        Sort.Order.desc("ano"))
+                        Sort.Order.desc("ano"),
+                        Sort.Order.desc("regDate"))   // regDate 내림차순
                 );
 
         JPQLQuery<ApplierEntity> query = from(applierEntity);
