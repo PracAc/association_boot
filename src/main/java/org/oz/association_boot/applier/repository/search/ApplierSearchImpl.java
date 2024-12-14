@@ -32,9 +32,12 @@ public class ApplierSearchImpl extends QuerydslRepositorySupport implements Appl
         QApplierEntity applierEntity = QApplierEntity.applierEntity;
 
         Pageable pageable = PageRequest.of(
-                pageRequestDTO.getPage() -1,
+                pageRequestDTO.getPage() - 1,
                 pageRequestDTO.getSize(),
-                Sort.by("regDate").descending());
+                Sort.by(
+                        Sort.Order.desc("regDate"),   // regDate 내림차순
+                        Sort.Order.desc("ano"))
+                );
 
         JPQLQuery<ApplierEntity> query = from(applierEntity);
         query.where(applierEntity.delFlag.eq(false));
