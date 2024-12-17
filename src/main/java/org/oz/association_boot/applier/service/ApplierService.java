@@ -204,6 +204,7 @@ public class ApplierService {
             return Optional.of("인증 처리중 문제가 생겼습니다. \n확인 후 다시 시도해주시길 바랍니다.");
         }
 
+
         // 보내게 될 메세지 지정
         MailHtmlSendDTO sendDTO = MailHtmlSendDTO.builder()
                 .ano(applierEntity.getAno())
