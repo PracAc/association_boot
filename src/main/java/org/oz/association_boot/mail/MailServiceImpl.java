@@ -80,7 +80,7 @@ public class MailServiceImpl implements MailService {
             context.setVariable("content", mailHtmlSendDTO.getContent());
             context.setVariable("cname", mailHtmlSendDTO.getCname());
             // React 인증 페이지 경로
-            context.setVariable("authLink", "http://localhost:5173/auth/"+ mailHtmlSendDTO.getAno());
+            context.setVariable("authLink", "https://www.busosi.com/auth/"+ mailHtmlSendDTO.getAno());
             context.setVariable("authCodeText", authCodeText);
 
             // 이메일 템플릿 처리 및 전송
@@ -89,8 +89,9 @@ public class MailServiceImpl implements MailService {
 
             // 보낸 사람 이름 설정 *이메일은 변경불가능(인증문제)
             String fromEmail = "no-reply@example.com"; // 만약 실제 서비스한다면 이런식으로 쓰고싶다 일뿐
-            String fromName = "00협회";
+            String fromName = "부산 지역 아티스트 협회";
             messageHelper.setFrom(new InternetAddress(fromEmail, fromName));
+
 
             // 제목 설정
             messageHelper.setSubject(mailHtmlSendDTO.getSubject());
