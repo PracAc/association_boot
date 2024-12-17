@@ -80,7 +80,7 @@ public class MailServiceImpl implements MailService {
             context.setVariable("content", mailHtmlSendDTO.getContent());
             context.setVariable("cname", mailHtmlSendDTO.getCname());
             // React 인증 페이지 경로
-            context.setVariable("authLink", "https://www.busosi.com/auth/"+ mailHtmlSendDTO.getAno());
+            context.setVariable("authLink", "https://www.busosi.site/auth/"+ mailHtmlSendDTO.getAno());
             context.setVariable("authCodeText", authCodeText);
 
             // 이메일 템플릿 처리 및 전송
